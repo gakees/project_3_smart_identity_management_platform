@@ -1,7 +1,7 @@
-# Smart Identity Management Platform (SIMPL)
+# Smart Identity Management Platform Layer (SIMPL)
 
 
-![Smart Identity Management Platform](/Images/smart-identity-management-platform.png)
+![Smart Identity Management Platform Layer](/Images/smart-identity-management-platform.png)
 
 Identification of an individual or an asset is key to recognize someone. And in today’s world of digitization the most efficient way of having this record is in a digital form as well as to save ourselves from the potential issue of Identity  theft. Smart Identity is a solution which will allow users to create a universal digital identity powered by blockchain technology. 
 
