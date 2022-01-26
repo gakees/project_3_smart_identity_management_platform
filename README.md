@@ -11,9 +11,9 @@ There ought to be a simpler way to maintain our identity, with a master identity
 
 Here we intend to give this concern a resolution and adopt a way of digitizing our Identity documents like passport, driver’s license , social security card, Insurance card and the likes.
 
-# In order to do so our first step would be to create a non fungible token id for these respective assets
+* In order to do so our first step would be to create a non fungible token id for these respective assets
 
-# We then intend to build a smart contract using Solidity and put this in a blockchain transaction to make it secure and tamper proof
+* We then intend to build a smart contract using Solidity and put this in a blockchain transaction to make it secure and tamper proof
 
-# We will have an User Interface created using Streamlit for users to input their options and be directed to the specific ID/Asset link
+* We will have an User Interface created using Streamlit for users to input their options and be directed to the specific ID/Asset link
 
