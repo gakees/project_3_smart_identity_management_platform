@@ -1,1 +1,2 @@
-# project_3_smart_identity_management_platform
+# Smart Identity Management Platform (SIMPL)
+
