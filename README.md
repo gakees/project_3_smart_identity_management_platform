@@ -3,7 +3,9 @@
 
 
 
-Identification of an individual or an asset is key to recognize someone. And in today’s world of digitization the most efficient way of having this record is in a digital form as well as to save ourselves from the potential issue of Identity  theft. The digitization of ID documents have manifold benefits right from the risk of being stolen , damaged, to Go Green as well. 
+Identification of an individual or an asset is key to recognize someone. And in today’s world of digitization the most efficient way of having this record is in a digital form as well as to save ourselves from the potential issue of Identity  theft. Smart Identity is a solution which will allow users to create a universal digital identity powered by blockchain technology. 
+
+The digitization of ID documents have manifold benefits right from the risk of being stolen , damaged, to Go Green as well. 
 
 Today, our identity data are held by individual organizations as we engage offline and online. Often, data is poorly integrated and out of date. This duplication is error prone and inefficient, too.
 
