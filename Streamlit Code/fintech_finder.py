@@ -1,4 +1,4 @@
-# Cryptocurrency Wallet
+# SIMP Input
 
 ################################################################################
 # For this Challenge, you will assume the perspective of a Fintech Finder
@@ -32,7 +32,7 @@ from web3 import Web3
 w3 = Web3(Web3.HTTPProvider('HTTP://127.0.0.1:7545'))
 ################################################################################
 # Step 1:
-# Import Ethereum Transaction Functions into the Fintech Finder Application
+# Import Ethereum Transaction Functions into the SIMP
 
 # In this section, you'll import several functions from the `crypto_wallet.py`
 # script into the file `fintech_finder.py`, which contains code for Fintech
