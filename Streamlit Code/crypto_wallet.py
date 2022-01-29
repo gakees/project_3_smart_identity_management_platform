@@ -15,10 +15,10 @@ from web3 import middleware
 from web3.gas_strategies.time_based import medium_gas_price_strategy
 
 ################################################################################
-# Wallet functionality 
+# SIMP Identification
 
 def generate_account():
-    """Create a digital wallet and Ethereum account from a mnemonic seed phrase."""
+    """Create a SIMP and Ethereum account from a mnemonic seed phrase."""
     # Fetch mnemonic from environment variable.
     mnemonic = os.getenv("MNEMONIC")
 
