@@ -31,7 +31,7 @@ st.markdown("## Store a Input Record in the Database")
 
 # Add an input area where you can get a value for `sender` from the user.
 # YOUR CODE HERE
-First_Name = st.text_input("Input Fisrt Name")
+First_Name = st.text_input("Input First Name")
 
 Last_Name = st.text_input("Input Last Name")
 
