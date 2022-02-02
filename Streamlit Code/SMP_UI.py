@@ -6,6 +6,8 @@ from typing import Any, List
 import datetime as datetime
 import pandas as pd
 import hashlib
+from PIL import Image
+
 
 # Create a Record Data Class that consists of the `sender`, `receiver`, and
 # `amount` attributes
@@ -16,7 +18,15 @@ class Record:
     receiver: str
     amount: float
     
-st.markdown("# SIMPL")
+#opening the image
+
+image = Image.open('simplpic.png')
+
+
+
+#displaying the image on streamlit app
+
+st.image(image, caption=' ')
 st.markdown("## Store a Input Record in the Database")
 
 # Add an input area where you can get a value for `sender` from the user.
