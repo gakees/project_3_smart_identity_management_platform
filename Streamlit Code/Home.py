@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-
+import Home
 
 def app():
     image = Image.open('simplpic.png')

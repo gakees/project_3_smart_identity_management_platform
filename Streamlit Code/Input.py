@@ -8,7 +8,7 @@ from PIL import Image
 def app():
     image = Image.open('simplpic.png')
     st.image(image, caption=' ')
-    st.title('Input')
+    st.title('Create Account')
     st.write('')
     st.markdown("## Store a Input Record in the Database")
 # Add an input area where you can get a value for `sender` from the user.

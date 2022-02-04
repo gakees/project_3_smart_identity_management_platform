@@ -6,8 +6,7 @@ import pandas as pd
 import hashlib
 from PIL import Image
 import Home
-import Input
-#import Retrieve
+import login
 #from data.create_data import create_table
 
 
@@ -18,7 +17,7 @@ import Input
 
 PAGES = {
     "Home": Home,
-    "Input": Input
+    "Login": login,
 }
 
 st.sidebar.title('Navigation')
