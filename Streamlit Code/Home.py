@@ -5,7 +5,8 @@ from PIL import Image
 def app():
     image = Image.open('simplpic.png')
     st.image(image, caption=' ')
-    st.title('Welcome')
+    image = Image.open('home.png')
+    st.image(image, caption=' ')
     #page = st.selectbox("Menu", ["Home","Input", "Retrieve"]) 
 
 
