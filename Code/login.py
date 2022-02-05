@@ -21,14 +21,14 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
 
     if authentication_status:
         st.write('Welcome *%s*' % (name))
-        PAGES = {
+        Navigation = {
             "Account": account,
             "Documents": documents,
         }
 
         st.title('Navigation')
-        selection = st.radio("Go to", list(PAGES.keys()))
-        page = PAGES[selection]
+        selection = st.radio("Go to", list(Navigation.keys()))
+        page = Navigation[selection]
         page.app(pinata, contract, wallet)
     elif not authentication_status:
         st.error('Username/password is incorrect')

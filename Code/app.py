@@ -17,9 +17,6 @@ Navigation = {
     "Home": home,
     "Login": login,
 }
-
-for account in web3.eth.accounts:
-    print(account)
     
 st.sidebar.title('Navigation')
 selection = st.sidebar.radio("Go to", list(Navigation.keys()))
