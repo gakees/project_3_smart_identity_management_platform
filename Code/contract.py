@@ -23,6 +23,9 @@ class SmartContractClient:
     def to_date(self, epoch, format="%d/%m/%Y"):
         return time.strftime(format, time.localtime(epoch))
 
+    def from_address(self, address):
+        return {'from': address, 'gas': self.gas_amount}
+
     def create_account(self, address, first_name, middle_name, last_name, date_of_birth, social_security_number):
         # Call the createAccount() smart contract function
         hash = self.contract.functions.createAccount(
@@ -30,11 +33,14 @@ class SmartContractClient:
             middle_name, 
             last_name, 
             self.to_epoch(date_of_birth), 
-            social_security_number).transact(
-            {
-                'from': address, 
-                'gas': self.gas_amount
-            })
+            social_security_number).transact(self.from_address(address))
+        
+        # Return the transaction receipt
+        return self.web3.eth.waitForTransactionReceipt(hash)
+
+    def get_account(self, address):
+        # Call the getAccount() smart contract function
+        hash = self.contract.functions.getAccount().transact(self.from_address(address))
         
         # Return the transaction receipt
         return self.web3.eth.waitForTransactionReceipt(hash)
@@ -46,11 +52,31 @@ class SmartContractClient:
             middle_name, 
             last_name, 
             self.to_epoch(date_of_birth), 
-            social_security_number).transact(
-            {
-                'from': address, 
-                'gas': self.gas_amount
-            })
+            social_security_number).transact(self.from_address(address))
+        
+        # Return the transaction receipt
+        return self.web3.eth.waitForTransactionReceipt(hash)
+
+    def add_document(self, address, name, category, uri):
+        # Call the addDocument() smart contract function
+        hash = self.contract.functions.addDocument(
+            name, 
+            category, 
+            uri).transact(self.from_address(address))
+        
+        # Return the transaction receipt
+        return self.web3.eth.waitForTransactionReceipt(hash)
+
+    def get_documents(self, address):
+        # Call the getDocuments() smart contract function
+        hash = self.contract.functions.getDocuments().transact(self.from_address(address))
+        
+        # Return the transaction receipt
+        return self.web3.eth.waitForTransactionReceipt(hash)
+
+    def remove_document(self, address, number):
+        # Call the removeDocument() smart contract function
+        hash = self.contract.functions.removeDocument(number).transact(self.from_address(address))
         
         # Return the transaction receipt
         return self.web3.eth.waitForTransactionReceipt(hash)

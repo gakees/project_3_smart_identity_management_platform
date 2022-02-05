@@ -1,28 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.11;
+pragma solidity ^0.8.0;
 
+import "./SmartIdentity.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol";
-
-// Struct definitions for use in smart contracts for the
-// Smart Identity Management Platform Layer (SIMPL)
-library SmartIdentity {
-
-    struct Account {
-        address owner;
-        string firstName;
-        string middleName;
-        string lastName;
-        int32 dateOfBirth;        
-        string ssn;
-    }
-
-    struct Document {
-        uint number;
-        string name;
-        string category;
-        string uri;
-    }
-}
 
 // An NFT implementation of smart identity tokens to track identity documentation
 contract SmartIdentityToken is ERC721 {
