@@ -4,8 +4,8 @@ import requests
 class PinataClient:
     BASE_URL = "https://api.pinata.cloud/pinning/{0}"
 
-    def __init__(self, api_key, secret_key) -> None:
-        self.__build_headers(self, api_key, secret_key)
+    def __init__(self, api_key, secret_key):
+        self.__build_headers(api_key, secret_key)
 
     def __build_headers(self, api_key, secret_key):
         self.__file_headers = {
@@ -14,8 +14,6 @@ class PinataClient:
         }
         self.__json_headers = self.__file_headers.copy()
         self.__json_headers.update({"Content-Type": "application/json"})
-        print(self.__file_headers)
-        print(self.__json_headers)
 
     def convert_data_to_json(self, content):
         data = {"pinataOptions": {"cidVersion": 1}, "pinataContent": content}

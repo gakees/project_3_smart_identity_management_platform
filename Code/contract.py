@@ -1,11 +1,11 @@
 import json
-import calendar, time;
+import calendar, time
 from web3 import Web3
 
 class SmartContractClient:
     def __init__(self, web3_provider_uri, contract_address, contract_abi_path, gas_amount=1000000):
         self.web3 = Web3(Web3.HTTPProvider(web3_provider_uri))
-        self.contract = self.__load_contract(contract_abi_path, contract_address)
+        self.contract = self.__load_contract(contract_address, contract_abi_path)
         self.gas_amount = gas_amount
 
     def __load_contract(self, contract_address, contract_abi_path):
@@ -17,11 +17,11 @@ class SmartContractClient:
         # Create an instance of the contract at address specified
         return self.web3.eth.contract(address=contract_address, abi=contract_abi)
 
-    def to_epoch(self, date, format="%d/%m/%Y"):
+    def to_epoch(self, date, format="%m/%d/%Y"):
         return calendar.timegm(time.strptime(date, format))
 
-    def to_date(self, epoch, format="%d/%m/%Y"):
-        return time.strftime(format, time.localtime(epoch))
+    def to_date(self, epoch, format="%m/%d/%Y"):
+        return time.strftime(format, time.gmtime(epoch))
 
     def from_address(self, address):
         return {'from': address, 'gas': self.gas_amount}
@@ -76,7 +76,7 @@ class SmartContractClient:
 
     def remove_document(self, address, number):
         # Call the removeDocument() smart contract function
-        hash = self.contract.functions.removeDocument(number).transact(self.from_address(address))
+        hash = self.contract.functions.getDocuments(number).transact(self.from_address(address))
         
         # Return the transaction receipt
         return self.web3.eth.waitForTransactionReceipt(hash)
