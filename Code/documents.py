@@ -9,8 +9,10 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
     st.write('')
 
     st.markdown("### Add Document")
-    document_name = st.text_input("Enter Document Number")
-    document_Category = st.selectbox("Enter Document Category", ("Driver's Licence", "Passport", "Social Security Number"))
-    document_file_upload = st.file_uploader("Enter Document File (Upload)", type=["gif", "jpg", "jpeg", "pdf", "png", "tiff"])
+    name = st.text_input("Enter Document Name")
+    category = st.selectbox("Enter Document Category", ("Driver's Licence", "Passport", "Social Security Number"))
+    file_to_upload = st.file_uploader("Enter Document File (Upload)", type=["gif", "jpg", "jpeg", "pdf", "png", "tiff"])
 
-    
+    if st.button("Add"):
+        print(file_to_upload)
+        print(contract.add_document(wallet, name, category, 'file.gif'))

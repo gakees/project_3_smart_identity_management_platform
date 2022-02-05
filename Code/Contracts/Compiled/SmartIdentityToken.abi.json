@@ -80,6 +80,100 @@
 		"type": "event"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "accountCreated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "accountUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "documentAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "documentRemoved",
+		"type": "event"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "string",
@@ -163,13 +257,13 @@
 				"type": "string"
 			},
 			{
-				"internalType": "int32",
+				"internalType": "int64",
 				"name": "dateOfBirth",
-				"type": "int32"
+				"type": "int64"
 			},
 			{
 				"internalType": "string",
-				"name": "ssn",
+				"name": "socialSecurityNumber",
 				"type": "string"
 			}
 		],
@@ -205,13 +299,13 @@
 						"type": "string"
 					},
 					{
-						"internalType": "int32",
+						"internalType": "int64",
 						"name": "dateOfBirth",
-						"type": "int32"
+						"type": "int64"
 					},
 					{
 						"internalType": "string",
-						"name": "ssn",
+						"name": "socialSecurityNumber",
 						"type": "string"
 					}
 				],
@@ -535,13 +629,13 @@
 				"type": "string"
 			},
 			{
-				"internalType": "int32",
+				"internalType": "int64",
 				"name": "dateOfBirth",
-				"type": "int32"
+				"type": "int64"
 			},
 			{
 				"internalType": "string",
-				"name": "ssn",
+				"name": "socialSecurityNumber",
 				"type": "string"
 			}
 		],
@@ -570,13 +664,13 @@
 						"type": "string"
 					},
 					{
-						"internalType": "int32",
+						"internalType": "int64",
 						"name": "dateOfBirth",
-						"type": "int32"
+						"type": "int64"
 					},
 					{
 						"internalType": "string",
-						"name": "ssn",
+						"name": "socialSecurityNumber",
 						"type": "string"
 					}
 				],

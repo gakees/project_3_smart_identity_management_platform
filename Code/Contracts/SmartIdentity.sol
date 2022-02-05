@@ -10,8 +10,8 @@ library SmartIdentity {
         string firstName;
         string middleName;
         string lastName;
-        int32 dateOfBirth;        
-        string ssn;
+        int64 dateOfBirth;        
+        string socialSecurityNumber;
     }
 
     struct Document {
