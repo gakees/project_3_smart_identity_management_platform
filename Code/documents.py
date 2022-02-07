@@ -17,5 +17,21 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
 
     if st.button("Add Document"):
         uri = pinata.upload_image(name, category, file_to_upload.getvalue())
-        receipt = contract.add_document(wallet, name, category, uri)
-        print(receipt)
+        add_document_receipt = contract.add_document(wallet, name, category, uri)
+
+    # Attempt to load the documents for the account (if any exist)
+    documents = [Document(tuple) for tuple in contract.get_documents(wallet)]
+
+    if (len(documents)):
+        pass
+
+class Document:
+    def __init__(self, document_tuple) -> None:
+        if not (len(document_tuple)) == 4:
+            self.exists = False
+        else:
+            self.exists = True
+            self.number = document_tuple[0]
+            self.name = document_tuple[1]
+            self.category = document_tuple[2]
+            self.uri = document_tuple[3]
