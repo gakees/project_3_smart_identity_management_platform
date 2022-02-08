@@ -12,6 +12,7 @@ library SmartIdentity {
         string lastName;
         int64 dateOfBirth;        
         string socialSecurityNumber;
+        uint nextDocumentNumber;
     }
 
     struct Document {
