@@ -10,12 +10,6 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
     st.image(image)
     st.write('')
 
-    render_add_document_form(pinata, contract, wallet)
-    st.write('')
-    st.write('')
-    render_existing_documents_form(pinata, contract, wallet)
-
-def render_add_document_form(pinata: PinataClient, contract: SmartContractClient, wallet: str):
     st.markdown("### Add Document")
     st.write('')
     
@@ -28,10 +22,14 @@ def render_add_document_form(pinata: PinataClient, contract: SmartContractClient
     if add_document_button:
         uri = pinata.upload_image(name, category, file_to_upload.getvalue())
         add_document_receipt = contract.add_document(wallet, name, category, uri)
+    st.write('')
+    st.write('')
 
-def render_existing_documents_form(pinata: PinataClient, contract: SmartContractClient, wallet: str):
     # Attempt to load the documents for the account (if any exist)
-    documents = [Document(tuple) for tuple in contract.get_documents(wallet)]
+    try:
+        documents = [Document(tuple) for tuple in contract.get_documents(wallet)]
+    except:
+        documents = []
 
     # Display existing documents (if applicable)
     if (len(documents)):

@@ -11,13 +11,33 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
     st.write('')
 
     # Attempt to load the account (if it exists)
-    account = Account(contract.get_account(wallet))
+    try:
+        account = Account(contract.get_account(wallet))
+    except:
+        account = Account(())
 
-    if account.exists:
+    if not account.exists:
+        st.markdown("### Create Account")
+        st.write('')
+
+        with st.form(key="createDocument", clear_on_submit=True):
+            first_name = st.text_input("First Name")
+            middle_name = st.text_input("Middle Name")
+            last_name = st.text_input("Last Name")
+            date_of_birth = st.date_input("Date of Birth",
+                value=datetime(1970, 1, 1),
+                min_value=datetime(1900, 1, 1), 
+                max_value=datetime(2000, 1, 1))
+            social_security_number = st.text_input("Social Security Number")
+            create_account_button = st.form_submit_button("Create Account")
+
+        if create_account_button:
+            create_account_receipt = contract.create_account(wallet, first_name, middle_name, last_name, calendar.timegm(date_of_birth.timetuple()), social_security_number)
+    else:
         st.markdown("### Update Account")
         st.write('')
 
-        with st.form(key="updateDocument", clear_on_submit=True):
+        with st.form(key="updateDocument", clear_on_submit=False):
             first_name = st.text_input("First Name", account.first_name)
             middle_name = st.text_input("Middle Name", account.middle_name)
             last_name = st.text_input("Last Name", account.last_name)
@@ -31,25 +51,11 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
         if update_account_button:
             update_account_receipt = contract.update_account(wallet, first_name, middle_name, last_name, calendar.timegm(date_of_birth.timetuple()), social_security_number)
 
-    else:
-        st.markdown("### Create Account")
-        st.write('')
-
-        with st.form(key="createDocument", clear_on_submit=True):
-            first_name = st.text_input("First Name")
-            middle_name = st.text_input("Middle Name")
-            last_name = st.text_input("Last Name")
-            date_of_birth = st.date_input("Date of Birth",
-                min_value=datetime(1900, 1, 1), 
-                max_value=datetime(2000, 1, 1))
-            social_security_number = st.text_input("Social Security Number")
-            update_account_button = st.form_submit_button("Update Account")
-        if st.button("Create Account"):
-            create_account_receipt = contract.create_account(wallet, first_name, middle_name, last_name, calendar.timegm(date_of_birth.timetuple()), social_security_number)
-
 class Account:
+    def __init__(self) -> None:
+        self.exists = False
     def __init__(self, account_tuple) -> None:
-        if not (len(account_tuple)) == 6:
+        if not (len(account_tuple)) == 7:
             self.exists = False
         else:
             self.exists = True
