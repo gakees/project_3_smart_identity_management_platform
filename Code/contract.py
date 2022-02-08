@@ -66,7 +66,7 @@ class SmartContractClient:
 
     def remove_document(self, address, number):
         # Call the removeDocument() smart contract function
-        hash = self.contract.functions.getDocuments(number).transact(self.from_address(address))
+        hash = self.contract.functions.removeDocument(number).transact(self.from_address(address))
         
         # Return the transaction receipt
         return self.web3.eth.waitForTransactionReceipt(hash)
