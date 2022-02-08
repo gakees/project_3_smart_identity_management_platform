@@ -23,7 +23,10 @@ hashed_passwords = stauth.hasher(passwords).generate()
 authenticator = stauth.authenticate(names, usernames, hashed_passwords, "SIMPL_COOKIE", "IMPL_SIGNATURE", cookie_expiration)
 name, authentication_status = authenticator.login("login", "sidebar")
 navigation = {"Home": home}
-selection = "Home"
+route = "Home"
+
+# Clear the sidebar
+st.sidebar.empty()
 
 if authentication_status:
     navigation = {
@@ -31,13 +34,14 @@ if authentication_status:
         "Documents": documents,
     }
 
-    st.sidebar.empty()
-    st.sidebar.write("Welcome *%s*" % (name))
-    selection = st.sidebar.radio("Go to:", list(navigation.keys()))
+    with st.sidebar:
+        st.write("Welcome *%s*" % (name))
+        route = st.radio("Go to:", list(navigation.keys()))
+        wallet = st.selectbox("Select Wallet (address)", web3.eth.accounts)
 elif authentication_status is None:
     pass
 elif not authentication_status:
     st.sidebar.error('Username/password is incorrect')
 
-page = navigation[selection]
+page = navigation[route]
 page.app(pinata, contract, wallet)

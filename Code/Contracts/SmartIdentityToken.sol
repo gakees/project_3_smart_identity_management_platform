@@ -6,10 +6,11 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 // An NFT implementation of smart identity tokens to track identity documentation
 contract SmartIdentityToken is ERC721 {
+    address internal contractOwner;
+
     int64 constant MIN_AGE = 946746585;
     int64 constant MAX_AGE = -2208927015;
-    address internal contractOwner;
-    uint internal nextDocumentNumber;
+
     mapping(address => SmartIdentity.Account) internal accounts;
     mapping(address => SmartIdentity.Document[]) internal documents;
 
@@ -23,7 +24,7 @@ contract SmartIdentityToken is ERC721 {
     }
 
     function createAccount(string memory firstName, string memory middleName, string memory lastName, int64 dateOfBirth, string memory socialSecurityNumber) public {
-        require(accounts[msg.sender].owner == address(0), "Unauthorized usage.  Cannot execute createAccount()");
+        require(accounts[msg.sender].owner == address(0), "Unauthorized.  Cannot execute createAccount()");
         require(bytes(firstName).length > 0, "firstName is a required field");
         require(bytes(lastName).length > 0, "lastName is a required field");
         require(dateOfBirth <= MIN_AGE && dateOfBirth >= MAX_AGE, "dateOfBirth must be between 1/1/1900 and 1/1/2000");
@@ -37,14 +38,14 @@ contract SmartIdentityToken is ERC721 {
     }
     
     function getAccount() public view returns(SmartIdentity.Account memory) {
-        require(accounts[msg.sender].owner != address(0), "Unauthorized usage.  Cannot execute getAccount()");
+        require(accounts[msg.sender].owner != address(0), "Unauthorized.  Cannot execute getAccount()");
 
         // Return the existing account (by owner)
         return accounts[msg.sender];        
     }
 
     function updateAccount(string memory firstName, string memory middleName, string memory lastName, int64 dateOfBirth, string memory socialSecurityNumber) public {
-        require(accounts[msg.sender].owner != address(0), "Unauthorized usage.  Cannot execute updateAccount()");
+        require(accounts[msg.sender].owner != address(0), "Unauthorized.  Cannot execute updateAccount()");
         require(bytes(firstName).length > 0, "firstName is a required field");
         require(bytes(lastName).length > 0, "lastName is a required field");
         require(dateOfBirth <= MIN_AGE && dateOfBirth >= MAX_AGE, "dateOfBirth must be between 1/1/1900 and 1/1/2000");
@@ -62,14 +63,17 @@ contract SmartIdentityToken is ERC721 {
     }
 
     function addDocument(string memory name, string memory category, string memory uri) public {
-        require(accounts[msg.sender].owner != address(0), "Unauthorized usage.  Cannot execute addDocument()");
+        require(accounts[msg.sender].owner != address(0), "Unauthorized.  Cannot execute addDocument()");
         require(bytes(name).length > 0, "name is a required field");
         require(bytes(category).length > 0, "category is a required field");
         require(bytes(uri).length > 0, "uri is a required field");
 
+        // Get the next document number for this account
         uint number = accounts[msg.sender].nextDocumentNumber;
-        _safeMint(msg.sender, accounts[msg.sender].nextDocumentNumber);
-        documents[msg.sender].push(SmartIdentity.Document(accounts[msg.sender].nextDocumentNumber, name, category, uri));
+
+        // Mint the NFT, store the newly added document into storage and increment next document number
+        _safeMint(msg.sender, number);
+        documents[msg.sender].push(SmartIdentity.Document(number, name, category, uri));
         accounts[msg.sender].nextDocumentNumber++;
 
         // Publish event to signal the document was added
@@ -77,14 +81,14 @@ contract SmartIdentityToken is ERC721 {
     }
 
     function getDocuments() public view returns (SmartIdentity.Document[] memory) {
-        require(accounts[msg.sender].owner != address(0), "Unauthorized usage.  Cannot retrieve documents from account.");
+        require(accounts[msg.sender].owner != address(0), "Unauthorized.  Cannot retrieve documents from account.");
 
         // Return the documents associated with account (by owner)
         return documents[msg.sender];
     }
 
     function removeDocument(uint number) public {
-        require(accounts[msg.sender].owner != address(0), "Unauthorized usage.  Cannot remove document from account.");
+        require(accounts[msg.sender].owner != address(0), "Unauthorized.  Cannot remove document from account.");
         require(number > 0, "The document number be greater than zero.");
 
         // Loop through the array of documents to find the correct one to remove

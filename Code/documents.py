@@ -4,6 +4,7 @@ from PIL import Image
 from pinata import PinataClient
 from contract import SmartContractClient
 from dataclasses import dataclass
+from web3.exceptions import ContractLogicError
 
 def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
     image = Image.open('../Images/simplpic.png')
@@ -12,16 +13,28 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
 
     st.markdown("### Add Document")
     st.write('')
-    
+    st.markdown("***** denotes required field")
     with st.form(key="addDocument", clear_on_submit=True):
-        name = st.text_input("Enter Document Name")
+        name = st.text_input("Enter Document Name").strip()
         category = st.selectbox("Enter Document Category", ("Driver's Licence", "Passport", "Social Security Number"))
         file_to_upload = st.file_uploader("Enter Document File (Upload)", type=["gif", "jpg", "jpeg", "pdf", "png", "tiff"], accept_multiple_files=False)
         add_document_button = st.form_submit_button("Add Document")
 
-    if add_document_button:
-        uri = pinata.upload_image(name, category, file_to_upload.getvalue())
-        add_document_receipt = contract.add_document(wallet, name, category, uri)
+        if add_document_button:
+            try:
+                if not len(name): st.error("A document name is required.")
+                elif file_to_upload is None: st.error("A file to upload is required.")
+                else:
+                    uri = pinata.upload_image(name, category, file_to_upload.getvalue())
+                    add_document_receipt = contract.add_document(wallet, name, category, uri)
+                    st.success("Document added successfully.")
+            except (ContractLogicError, ValueError) as error:
+                data = error.args[0]["data"]
+                key = list(data.keys())[0]
+                st.error(data[key]["reason"])
+            except BaseException as error:
+                st.error(f"An unknown error ocurred.\nMessage: {error}")
+
     st.write('')
     st.write('')
 
@@ -43,7 +56,7 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
         if len(documents_df):
                 st.markdown("### Existing Documents")
                 st.write('')
-                st.write(documents_df)
+                st.dataframe(documents_df)
                 st.write('')
         
                 column1, column2, column3, column4 = st.columns([1, 1, 1, 1])
@@ -58,7 +71,17 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
                 with column4:
                     st.empty()
                 if remove_document_button:
-                    remove_document_receipt = contract.remove_document(wallet, document_number)
+                    try:
+                        remove_document_receipt = contract.remove_document(wallet, document_number)
+                        index = documents_df[documents_df.Number == document_number].index
+                        documents_df.drop(index, inplace=True)
+                        st.success("Document removed successfully.")
+                    except (ContractLogicError, ValueError) as error:
+                        data = error.args[0]["data"]
+                        key = list(data.keys())[0]
+                        st.error(data[key]["reason"])
+                    except BaseException as error:
+                        st.error(f"An unknown error ocurred.\nMessage: {error}")
 
 @dataclass
 class Document:
