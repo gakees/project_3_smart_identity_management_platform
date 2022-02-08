@@ -1,6 +1,7 @@
 import os
-import home, login
 import streamlit as st
+import streamlit_authenticator as stauth
+import home, account, documents
 from web3 import Web3
 from pathlib import Path
 from dotenv import load_dotenv
@@ -13,12 +14,30 @@ web3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 pinata = PinataClient(os.getenv("PINATA_API_KEY"), os.getenv("PINATA_API_SECRET"))
 contract = SmartContractClient(os.getenv("WEB3_PROVIDER_URI"), os.getenv("CONTRACT_ADDRESS"), Path("./Contracts/Compiled/SmartIdentityToken.abi.json"))
 
-Navigation = {
-    "Home": home,
-    "Login": login,
-}
-    
-st.sidebar.title('Navigation')
-selection = st.sidebar.radio("Go to", list(Navigation.keys()))
-page = Navigation[selection]
+names = ["Brittany Jacques", "Debolina Mukherjee", "Glenn Kees", "Jaime Barragan", "Paul Rodriguez"]
+usernames = ["bjacques", "dmukherjee", "gkees", "jbarragan", "prodriguez"]
+passwords = ["test", "test", "test", "test", "test"]
+cookie_expiration = 0
+
+hashed_passwords = stauth.hasher(passwords).generate()
+authenticator = stauth.authenticate(names, usernames, hashed_passwords, "SIMPL_COOKIE", "IMPL_SIGNATURE", cookie_expiration)
+name, authentication_status = authenticator.login("login", "sidebar")
+navigation = {"Home": home}
+selection = "Home"
+
+if authentication_status:
+    navigation = {
+        "Account": account,
+        "Documents": documents,
+    }
+
+    st.sidebar.empty()
+    st.sidebar.write("Welcome *%s*" % (name))
+    selection = st.sidebar.radio("Go to:", list(navigation.keys()))
+elif authentication_status is None:
+    pass
+elif not authentication_status:
+    st.sidebar.error('Username/password is incorrect')
+
+page = navigation[selection]
 page.app(pinata, contract, wallet)

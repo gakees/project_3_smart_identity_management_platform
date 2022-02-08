@@ -17,30 +17,33 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
         st.markdown("### Update Account")
         st.write('')
 
-        first_name = st.text_input("First Name", account.first_name)
-        middle_name = st.text_input("Middle Name", account.middle_name)
-        last_name = st.text_input("Last Name", account.last_name)
-        date_of_birth = st.date_input("Date of Birth",
-            value=account.date_of_birth,
-            min_value=datetime(1900, 1, 1), 
-            max_value=datetime(2000, 1, 1))
-        social_security_number = st.text_input("Social Security Number", account.social_security_number)
+        with st.form(key="updateDocument", clear_on_submit=True):
+            first_name = st.text_input("First Name", account.first_name)
+            middle_name = st.text_input("Middle Name", account.middle_name)
+            last_name = st.text_input("Last Name", account.last_name)
+            date_of_birth = st.date_input("Date of Birth",
+                value=account.date_of_birth,
+                min_value=datetime(1900, 1, 1), 
+                max_value=datetime(2000, 1, 1))
+            social_security_number = st.text_input("Social Security Number", account.social_security_number)
+            update_account_button = st.form_submit_button("Update Account")
 
-        if st.button("Update Account"):
+        if update_account_button:
             update_account_receipt = contract.update_account(wallet, first_name, middle_name, last_name, calendar.timegm(date_of_birth.timetuple()), social_security_number)
 
     else:
         st.markdown("### Create Account")
         st.write('')
 
-        first_name = st.text_input("First Name")
-        middle_name = st.text_input("Middle Name")
-        last_name = st.text_input("Last Name")
-        date_of_birth = st.date_input("Date of Birth",
-            min_value=datetime(1900, 1, 1), 
-            max_value=datetime(2000, 1, 1))
-        social_security_number = st.text_input("Social Security Number")
-
+        with st.form(key="createDocument", clear_on_submit=True):
+            first_name = st.text_input("First Name")
+            middle_name = st.text_input("Middle Name")
+            last_name = st.text_input("Last Name")
+            date_of_birth = st.date_input("Date of Birth",
+                min_value=datetime(1900, 1, 1), 
+                max_value=datetime(2000, 1, 1))
+            social_security_number = st.text_input("Social Security Number")
+            update_account_button = st.form_submit_button("Update Account")
         if st.button("Create Account"):
             create_account_receipt = contract.create_account(wallet, first_name, middle_name, last_name, calendar.timegm(date_of_birth.timetuple()), social_security_number)
 
