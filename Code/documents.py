@@ -28,6 +28,7 @@ def app(pinata: PinataClient, contract: SmartContractClient, wallet: str):
                     uri = pinata.upload_image(name, category, file_to_upload.getvalue())
                     add_document_receipt = contract.add_document(wallet, name, category, uri)
                     st.success("Document added successfully.")
+                    st.markdown(f"The document can be viewed here: [IPFS Gateway Link](https://ipfs.io/ipfs/{uri[7:]})")
             except (ContractLogicError, ValueError) as error:
                 data = error.args[0]["data"]
                 key = list(data.keys())[0]
