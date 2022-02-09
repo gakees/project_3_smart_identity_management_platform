@@ -25,9 +25,6 @@ name, authentication_status = authenticator.login("login", "sidebar")
 navigation = {"Home": home}
 route = "Home"
 
-# Clear the sidebar
-st.sidebar.empty()
-
 if authentication_status:
     navigation = {
         "Account": account,
@@ -36,7 +33,11 @@ if authentication_status:
 
     with st.sidebar:
         st.write("Welcome *%s*" % (name))
+
+        st.write(" ")
         route = st.radio("Go to:", list(navigation.keys()))
+
+        st.write(" ")
         wallet = st.selectbox("Select Wallet (address)", web3.eth.accounts)
 elif authentication_status is None:
     pass
